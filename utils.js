@@ -16,6 +16,10 @@ const resolveFileAndLine = (file, classname, output) => {
 };
 
 const resolvePath = async filename => {
+    if (filename.startsWith(".")) {
+        return filename;
+    }
+
     core.debug(`Resolving path for ${filename}`);
     const globber = await glob.create(`**/${filename}.*`, { followSymbolicLinks: false });
     const searchPath = globber.getSearchPaths() ? globber.getSearchPaths()[0] : "";
@@ -80,7 +84,7 @@ async function parseFile(file) {
                 );
 
                 const path = await resolvePath(filename);
-                const title = `${filename}.${testcase._attributes.name}`;
+                const title = testcase._attributes.name;
                 core.info(`${path}:${line} | ${message.replace(/\n/g, ' ')}`);
 
                 annotations.push({
