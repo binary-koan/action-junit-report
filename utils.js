@@ -51,7 +51,7 @@ async function parseFile(file) {
 
     for (const testsuite of testsuites) {
         if(!testsuite || !testsuite.testcase) {
-            return { count, skipped, annotations };
+            continue;
         }
 
         const testcases = Array.isArray(testsuite.testcase)
